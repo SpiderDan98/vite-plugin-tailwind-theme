@@ -3,9 +3,6 @@ on:
   release:
     types: [published]
 
-env:
-  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,8 +16,8 @@ jobs:
         with:
           node-version-file: ".nvmrc"
       - name: Install packages
-        run: npm install
-      - name: Log in on npm
-        run: npm login
+        run: yarn install
       - name: Publish on npm
         run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
