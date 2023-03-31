@@ -11,6 +11,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Update version
         run: echo "`jq '.version="${{github.ref_name}}"' package.json`" > package.json
+      - name: Commit new version
+        run: |
+          git config --global user.name 'SpiderDan98'
+          git config --global user.email 'danielkemna@t-online.de'
+          git commit -am "Update to ${{github.ref_name}}"
+          git push
       - name: Setup node
         uses: actions/setup-node@v3
         with:
