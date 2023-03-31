@@ -1,8 +1,8 @@
 {
   "name": "vite-plugin-tailwind-theme",
   "type": "module",
-  "version": "0.0.0",
-  "description": "",
+  "version": "1.0.0-beta.1",
+  "description": "A vite plugin that creates virtual files for your custom Tailwind configuration.",
   "files": [
     "dist"
   ],
