@@ -130,3 +130,9 @@ declare module "virtual:tailwind-theme/*" {
 
   export default themeValue;
 }
+
+declare module "vite-plugin-tailwind-theme" {
+  import tailwindTheme from "./plugin";
+
+  export default tailwindTheme;
+}

@@ -48,7 +48,7 @@ Note: some values can't be imported directly because the js name is invalid. For
 For the correct import types, you need to reference our types in your `vite-env.d.ts`.
 
 ```ts
-/// <reference types="vite-plugin-tailwind-theme/dist/types" />
+/// <reference types="vite-plugin-tailwind-theme" />
 ```
 
 The types for the directory named export must be set manually, as they depend on your custom configuration. You can declare them in your `vite-env.d.ts` as follows.
