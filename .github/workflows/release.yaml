@@ -7,12 +7,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Update version
         run: echo "`jq '.version="${{github.ref_name}}"' package.json`" > package.json
-      - uses: actions/setup-node@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
-      - run: npm publish
+      - name: Publish on npm
+        run: npm login && npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
