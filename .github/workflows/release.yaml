@@ -15,6 +15,7 @@ jobs:
         run: |
           git config --global user.name 'SpiderDan98'
           git config --global user.email 'danielkemna@t-online.de'
+          git remote add origin https://github.com/SpiderDan98/vite-plugin-tailwind-theme.git
           git checkout main
           git commit -am "Update to ${{github.ref_name}}"
           git push --force
