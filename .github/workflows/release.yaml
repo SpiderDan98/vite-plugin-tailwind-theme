@@ -15,8 +15,9 @@ jobs:
         run: |
           git config --global user.name 'SpiderDan98'
           git config --global user.email 'danielkemna@t-online.de'
+          git checkout main
           git commit -am "Update to ${{github.ref_name}}"
-          git push
+          git push --force
       - name: Setup node
         uses: actions/setup-node@v3
         with:
