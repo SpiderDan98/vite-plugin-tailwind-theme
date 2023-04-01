@@ -1,4 +1,4 @@
-import resolveConfig from "tailwindcss/resolveConfig";
+import resolveConfig from "tailwindcss/resolveConfig.js";
 import isValidName from "@/valid-name";
 
 const createExports = (object: Record<string, any>) => {

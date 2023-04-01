@@ -11,6 +11,14 @@ export default defineConfig({
       name: "VitePluginTailwindTheme",
       fileName: "vite-plugin-tailwind-theme",
     },
+    rollupOptions: {
+      external: ["tailwindcss/resolveConfig.js"],
+      output: {
+        globals: {
+          "tailwindcss/resolveConfig.js": "resolveConfig",
+        },
+      },
+    },
   },
   resolve: {
     alias: {
