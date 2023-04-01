@@ -11,15 +11,6 @@ jobs:
         uses: actions/checkout@v3
       - name: Update version
         run: echo "`jq '.version="${{github.ref_name}}"' package.json`" > package.json
-      - name: Commit new version
-        run: |
-          git config --global user.name 'SpiderDan98'
-          git config --global user.email 'danielkemna@t-online.de'
-          git remote set-url origin https://${{ secrets.GIT_TOKEN }}@github.com/SpiderDan98/vite-plugin-tailwind-theme.git
-          git fetch
-          git checkout main
-          git commit -am "Update to ${{github.ref_name}}"
-          git push --force
       - name: Setup node
         uses: actions/setup-node@v3
         with:
