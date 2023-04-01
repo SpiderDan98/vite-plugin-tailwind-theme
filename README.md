@@ -88,4 +88,4 @@ declare module "virtual:tailwind-theme/screens" {
 ## Bundle size
 
 Use the lowest level import possible to reduce bundle size. The tailwind configuration can be large, with all the colors, etc. So we don't recommend using the main import `virtual:tailwind-theme`.
-But you can feel free to use multiple imports in different files.
+But you can feel free to use the same import in multiple files. The values will be just once in your bundle.
