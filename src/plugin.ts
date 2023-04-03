@@ -28,7 +28,7 @@ const createExports = (object: Record<string, any>) => {
 
 const tailwindTheme = async (tailwindConfigPath = "tailwind.config.js") => {
   const nodeModulesPath = `../../../${tailwindConfigPath}`;
-  const tailwindConfig = await import(nodeModulesPath);
+  const tailwindConfig = (await import(nodeModulesPath)).default;
   const { theme } = resolveConfig(tailwindConfig);
   const virtualModuleId = "virtual:tailwind-theme";
   const resolvedVirtualModuleId = "\0" + virtualModuleId;
