@@ -1,5 +1,6 @@
 import resolveConfig from "tailwindcss/resolveConfig.js";
 import isValidName from "@/valid-name";
+import { Plugin } from "vite";
 
 const createExports = (object: Record<string, any>) => {
   const exports = Object.entries(object)
@@ -26,7 +27,9 @@ const createExports = (object: Record<string, any>) => {
   return exports + defaultExport;
 };
 
-const tailwindTheme = async (tailwindConfigPath = "tailwind.config.js") => {
+const tailwindTheme = async (
+  tailwindConfigPath = "tailwind.config.js"
+): Promise<Plugin> => {
   const nodeModulesPath = `../../../${tailwindConfigPath}`;
   const tailwindConfig = (await import(nodeModulesPath)).default;
   const { theme } = resolveConfig(tailwindConfig);
@@ -54,7 +57,7 @@ const tailwindTheme = async (tailwindConfigPath = "tailwind.config.js") => {
       }
     },
     // @ts-ignore
-    load: (id: string) => {
+    load: (id) => {
       if (id === resolvedVirtualModuleId) {
         return createExports(theme);
       }
