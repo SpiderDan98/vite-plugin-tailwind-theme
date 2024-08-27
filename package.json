@@ -19,7 +19,7 @@
     "optimized import",
     "typescript"
   ],
-  "author": "Daniel Kemna <danielkemna@t-online.de>",
+  "author": "SpiderDan98",
   "main": "./dist/vite-plugin-tailwind-theme.umd.cjs",
   "module": "./dist/vite-plugin-tailwind-theme.js",
   "types": "./dist/index.d.ts",
@@ -27,7 +27,8 @@
   "exports": {
     ".": {
       "import": "./dist/vite-plugin-tailwind-theme.js",
-      "require": "./dist/vite-plugin-tailwind-theme.umd.cjs"
+      "require": "./dist/vite-plugin-tailwind-theme.umd.cjs",
+      "types": "./dist/index.d.ts"
     }
   },
   "scripts": {
