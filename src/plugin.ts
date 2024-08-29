@@ -1,53 +1,21 @@
-import resolveConfig from "tailwindcss/resolveConfig.js";
-import isValidName from "@/valid-name";
-import { Plugin } from "vite";
-
-const createExports = (object: Record<string, any>) => {
-  const exports = Object.entries(object)
-    .map(
-      ([key, value]) =>
-        isValidName(key) && `export const ${key} = ${JSON.stringify(value)};`
-    )
-    .filter((exp) => !!exp)
-    .join("");
-
-  const validKeys = Object.keys(object).filter((key) => isValidName(key));
-  const invalidKeys = Object.keys(object).filter(
-    (key) => !validKeys.includes(key)
-  );
-
-  const otherKeys = invalidKeys.map(
-    (key) => `"${key}": ${JSON.stringify(object[key])}`
-  );
-
-  const defaultExport = `export default {${validKeys.join(
-    ", "
-  )}, ...{${otherKeys.join(", ")}}};`;
-
-  return exports + defaultExport;
-};
+import { resolveTailwindModule } from "@/helper";
+import { createExports } from "@/helper/exports";
+import { Plugin, ResolvedConfig } from "vite";
 
 const tailwindTheme = async (
-  tailwindConfigPath = "tailwind.config.js"
+  tailwindConfigPath = "tailwind.config.ts"
 ): Promise<Plugin> => {
-  const nodeModulesPath = `../../../${tailwindConfigPath}`;
-  const tailwindConfig = (await import(nodeModulesPath)).default;
-  const { theme } = resolveConfig(tailwindConfig);
-  const virtualModuleId = "virtual:tailwind-theme";
-  const resolvedVirtualModuleId = "\0" + virtualModuleId;
-
-  const virtualModuleIds = Object.keys(theme).map(
-    (key) => `${virtualModuleId}/${key}`
-  );
-
-  const resolvedVirtualModuleIds = virtualModuleIds.map(
-    (virtualModuleId) => "\0" + virtualModuleId
-  );
+  let config: ResolvedConfig;
 
   return {
     name: "tailwind-theme",
-    // @ts-ignore
+    configResolved: (resolvedConfig) => {
+      config = resolvedConfig;
+    },
     resolveId: (id: string) => {
+      const { virtualModuleId, resolvedVirtualModuleId, virtualModuleIds } =
+        resolveTailwindModule(tailwindConfigPath, config);
+
       if (id === virtualModuleId) {
         return resolvedVirtualModuleId;
       }
@@ -55,17 +23,23 @@ const tailwindTheme = async (
       if (virtualModuleIds.includes(id)) {
         return "\0" + id;
       }
+
+      return undefined;
     },
-    // @ts-ignore
     load: (id) => {
-      if (id === resolvedVirtualModuleId) {
+      const { theme, resolvedVirtualModuleId, resolvedVirtualModuleIds } =
+        resolveTailwindModule(tailwindConfigPath, config);
+
+      if (id === resolvedVirtualModuleId && theme) {
         return createExports(theme);
       }
 
-      if (resolvedVirtualModuleIds.includes(id)) {
+      if (resolvedVirtualModuleIds.includes(id) && theme) {
         const path = id.split("/")[1];
         return createExports(theme[path]);
       }
+
+      return undefined;
     },
   };
 };
