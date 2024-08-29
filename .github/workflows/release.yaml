@@ -25,7 +25,7 @@ jobs:
         run: yarn build
 
       - name: Login on npm
-        run: npm config set _authToken=${{ secrets.NPM_TOKEN }}
+        run: npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
 
       - name: Publish on npm
         run: npm publish
