@@ -12,10 +12,20 @@ export default defineConfig({
       fileName: "vite-plugin-tailwind-theme",
     },
     rollupOptions: {
-      external: ["tailwindcss/resolveConfig.js"],
+      external: [
+        "tailwindcss/loadConfig.js",
+        "tailwindcss/resolveConfig.js",
+        "node:path",
+        "node:fs",
+        "node:url",
+      ],
       output: {
         globals: {
+          "tailwindcss/loadConfig.js": "loadConfig",
           "tailwindcss/resolveConfig.js": "resolveConfig",
+          "node:path": "path",
+          "node:fs": "fs",
+          "node:url": "url",
         },
       },
     },
@@ -23,6 +33,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": resolve(__dirname, "./src"),
+      "~": resolve(__dirname, "./"),
     },
   },
 });
