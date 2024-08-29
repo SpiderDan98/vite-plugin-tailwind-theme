@@ -47,7 +47,7 @@ import * as screens from "virtual:tailwind-theme/screens";
 import { md } from "virtual:tailwind-theme/screens";
 ```
 
-Note: some values are imported with some `_`. Without it, the js definition would be invalid. For example, `1/2` and `2xl` will get `_1_2` and `_2xl`.
+Note: some values are imported with some `_`. Without it, the js definition would be invalid. For example, `2xl` will get `$2xl`.
 
 ## Typescript
 
